@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Tracker</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <style>
+        /* Стилове за тялото на страницата */
+        body {
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-image: url('https://wallpapers.com/images/featured/cool-phone-edbi0q4iftfa2zb4.jpg');
+        }
+
+        /* Стилове за заглавието */
+        #header {
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Стилове за координатите */
+        .coordinates {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="header">Mouse Tracker App <span class="coordinates">X: - Y: -</span></h1>
+    <div id="images"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var socket = io();
+            var coordinates = document.querySelector('.coordinates');
+
+            document.addEventListener('mousemove', (event) => {
+                var x = event.clientX;
+                var y = event.clientY;
+
+                // Обновяване на текста с координатите
+                coordinates.textContent = `X: ${x} - Y: ${y}`;
+
+                socket.emit('mouse_move', {x: x, y: y});
+            });
+
+            document.addEventListener('click', (event) => {
+                if (event.button === 0) {
+                    socket.emit('mouse_click', {x: event.clientX, y: event.clientY});
+                }
+            });
+
+            socket.on('new_image', function(data) {
+                var imgDiv = document.getElementById('images');
+                var img = document.createElement('img');
+                img.src = data.image_path;
+                img.width = 227;
+                imgDiv.appendChild(img);
+            });
+        });
+    </script>
+</body>
+</html>
