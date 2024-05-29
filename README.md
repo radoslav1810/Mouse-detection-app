@@ -8,11 +8,11 @@ source myenv/bin/activate
 # Install the necessary packages from the requirements.txt file:
 pip install -r requirements.txt
 
-# Go to the directory of app.py:
-cd /path/to/the/directory/of/app.py
+# Go to the directory of main.py:
+cd /path/to/downloaded/project
 
 # Start the application:
-python app.py
+python main.py
 
 # Open your web browser and visit the following URL:
 ## http://127.0.0.1:5000/
