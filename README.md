@@ -1,4 +1,4 @@
-Installiation
+Installiation for LINUX 
 # Open the terminal and create a new virtual environment:
 python3 -m venv myenv
 
